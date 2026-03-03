@@ -15,13 +15,13 @@ self_dir = os.path.dirname(env.subst('$BUILD_SCRIPT'))
 platform_dir = os.path.abspath(join(self_dir, '..'))
 
 env.Replace(
-    AR="arm-none-eabi-ar",
+    AR="arm-none-eabi-gcc-ar",
     AS="arm-none-eabi-as",
     CC="arm-none-eabi-gcc",
     CXX="arm-none-eabi-g++",
     GDB="arm-none-eabi-gdb",
     OBJCOPY="arm-none-eabi-objcopy",
-    RANLIB="arm-none-eabi-ranlib",
+    RANLIB="arm-none-eabi-gcc-ranlib",
     SIZETOOL="arm-none-eabi-size",
 
     ARFLAGS=["rc"],
@@ -88,12 +88,15 @@ target_elf = None
 if "nobuild" in COMMAND_LINE_TARGETS:
     target_elf = join("$BUILD_DIR", "${PROGNAME}.elf")
     target_firm = join("$BUILD_DIR", "${PROGNAME}.hex")
+    target_bin = join("$BUILD_DIR", "${PROGNAME}.bin")
 else:
     target_elf = env.BuildProgram()
-    target_firm = target_elf  # TODO: can require conversion to e.g. .hex
+    target_firm = env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf)
+    target_bin = env.ElfToBin(join("$BUILD_DIR", "${PROGNAME}"), target_elf)
 
 AlwaysBuild(env.Alias("nobuild", target_firm))
 target_buildprog = env.Alias("buildprog", target_firm)
+target_binprog = env.Alias("buildbin", target_bin)
 
 #
 # Target: Print binary size
@@ -229,4 +232,4 @@ if any("-Wl,-T" in f for f in env.get("LINKFLAGS", [])):
 # Default targets
 #
 
-Default([target_buildprog, target_size])
+Default([target_buildprog, target_size, target_binprog])

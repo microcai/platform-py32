@@ -47,6 +47,7 @@ env.Append(
         join(FRAMEWORK_DIR, "system", "PY32F0xx"),
         join(FRAMEWORK_LIB_DIR, "Arduino", "inc"),
         join(FRAMEWORK_LIB_DIR, "Wire", "src"),
+        join(FRAMEWORK_LIB_DIR, "SPI", "src"),
         join(FRAMEWORK_DIR, "system", "Arduino-PY32F0xx-Drivers", "CMSIS", "Device", "PY32F0xx", "Source", "gcc"),
     ]
 )
@@ -91,20 +92,11 @@ libs.append(env.BuildLibrary(
 ))
 
 libs.append(env.BuildLibrary(
-    join("$BUILD_DIR", "py32driverbase"),
-    FRAMEWORK_VARIANTS_DIR,
+    join("$BUILD_DIR", "arduino", "libraries"),
+    join(FRAMEWORK_DIR, "libraries", "SrcWrapper", "src"),
     src_filter=[
-        "+<*.c>",
-        "+<*.cpp>"
-    ]
-))
-
-
-libs.append(env.BuildLibrary(
-    join("$BUILD_DIR", "arduino"),
-    join(FRAMEWORK_DIR, "cores", "arduino"),
-    src_filter=[
-        "+<*.c>",
+        "+<air/*.c>",
+        "+<air/*.cpp>",
         "+<*.cpp>",
     ]
 ))
@@ -120,6 +112,15 @@ libs.append(env.BuildLibrary(
 ))
 
 libs.append(env.BuildLibrary(
+    join("$BUILD_DIR", "arduino"),
+    join(FRAMEWORK_DIR, "cores", "arduino"),
+    src_filter=[
+        "+<*.c>",
+        "+<*.cpp>",
+    ]
+))
+
+libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "arduino", "py32hal_drivers"),
     join(FRAMEWORK_DIR, "system", "Arduino-PY32F0xx-Drivers", "PY32F0xx_HAL_Driver", "Src"),
     src_filter=[
@@ -128,12 +129,11 @@ libs.append(env.BuildLibrary(
 ))
 
 libs.append(env.BuildLibrary(
-    join("$BUILD_DIR", "arduino", "libraries"),
-    join(FRAMEWORK_DIR, "libraries", "SrcWrapper", "src"),
+    join("$BUILD_DIR", "py32driverbase"),
+    FRAMEWORK_VARIANTS_DIR,
     src_filter=[
-        "+<air/*.c>",
-        "+<air/*.cpp>",
-        "+<*.cpp>",
+        "+<*.c>",
+        "+<*.cpp>"
     ]
 ))
 
@@ -146,5 +146,4 @@ env.Append(LINKFLAGS=[
     "-Wl,--defsym=LD_FLASH_OFFSET=0",
     "-Wl,--gc-sections",
     "-Wl,--entry=Reset_Handler",
-    "-Wl,--script=%s/ldscript.ld" % join(FRAMEWORK_DIR, "system"),
 ])

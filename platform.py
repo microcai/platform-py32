@@ -10,7 +10,7 @@ IS_WINDOWS = sys.platform.startswith("win")
 PLATFORM_DIR = os.path.dirname(__file__)
 
 
-class Py32f0Platform(PlatformBase):
+class Platformpy32f0xxPlatform(PlatformBase):
 
     def is_embedded(self):
         return True
@@ -68,7 +68,7 @@ class Py32f0Platform(PlatformBase):
                         "executable": "$PYTHONEXE",
                         "arguments": [
                             "pyocd-gdbserver.py",
-                            "--pack", os.path.join(PLATFORM_DIR, 'misc', 'Puya.PY32F0xx_DFP.1.1.7.pack'),
+                            "--pack", os.path.join(PLATFORM_DIR, 'misc', 'Puya.PY32F0xx_DFP.1.2.15.pack'),
                             "--target",  pyocd_target,
                         ],
                         "ready_pattern": "GDB server started on port"

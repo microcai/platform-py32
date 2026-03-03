@@ -33,6 +33,7 @@ env.Append(
         "-ffunction-sections",  # place each function in its own section
         "-fdata-sections",
         "-Wall",
+        "-flto",
         "-mthumb",
         "-nostdlib"
     ],
@@ -47,6 +48,7 @@ env.Append(
     ],
 
     LINKFLAGS=[
+        "-flto",
         "-Os",
         "-Wl,--gc-sections,--relax",
         "-mthumb",
@@ -55,7 +57,7 @@ env.Append(
         "--specs=nosys.specs"
     ],
 
-    LIBS=["c", "gcc", "m", "stdc++", "nosys"]
+    LIBS=["c", "gcc", "m", "stdc++"]
 )
 
 if "BOARD" in env:

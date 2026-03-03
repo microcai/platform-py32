@@ -45,8 +45,6 @@ env.Append(
     ASFLAGS=machine_flags,
     ASPPFLAGS=['-x', 'assembler-with-cpp'],
 
-    CFLAGS=['-std=gnu17'],
-
     CCFLAGS=machine_flags + [
         "-Os",  # optimize for size
         "-ffunction-sections",  # place each function in its own section
@@ -58,7 +56,6 @@ env.Append(
     CXXFLAGS=[
         "-fno-rtti",
         "-fno-exceptions",
-        "-std=gnu++17",
         "-fno-threadsafe-statics",
         '-Wno-register',
     ],
@@ -67,6 +64,7 @@ env.Append(
         mcu_long,
         mcu_short,
         'PY32F0',
+        'PY32F0xx'
     ],
 
     # includes
