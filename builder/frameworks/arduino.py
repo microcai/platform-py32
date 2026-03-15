@@ -24,6 +24,8 @@ FRAMEWORK_VARIANTS_DIR = join(FRAMEWORK_DIR, "variants", bsp.upper() + "xx", bsp
 
 
 def get_linker_script():
+
+
     ldscript = join(FRAMEWORK_VARIANTS_DIR, "ldscript.ld")
 
     if isfile(ldscript):
@@ -66,7 +68,8 @@ env.Append(
     ]
 )
 
-env.Replace(LDSCRIPT_PATH=get_linker_script())
+if not board.get("build.ldscript", ""):
+    env.Replace(LDSCRIPT_PATH=get_linker_script())
 
 #
 # Target: Build Firmware Library
