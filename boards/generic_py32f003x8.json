@@ -4,7 +4,6 @@
       "cpu": "cortex-m0plus",
       "mcu": "py32f003x8",
       "extra_flags": "-DPY32F003x8",
-      "ldscript": "py32f003x8.ld",
       "bsp": "PY32F003xx"
     },
     "debug": {

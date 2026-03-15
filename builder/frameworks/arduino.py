@@ -27,6 +27,7 @@ def get_linker_script():
 
 
     ldscript = join(FRAMEWORK_VARIANTS_DIR, "ldscript.ld")
+    sys.stderr.write("check linker script for the required board! "+ldscript)
 
     if isfile(ldscript):
         return ldscript
@@ -68,7 +69,7 @@ env.Append(
     ]
 )
 
-if not board.get("build.ldscript", ""):
+if not board.get("build.board_build", ""):
     env.Replace(LDSCRIPT_PATH=get_linker_script())
 
 #

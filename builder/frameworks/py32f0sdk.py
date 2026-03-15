@@ -124,12 +124,18 @@ def get_linker_sizes(ld_file: str):
         return None
     return None
 
+def get_linker_script():
+    ldscript = join(FRAMEWORK_VARIANTS_DIR, "ldscript.ld")
+    sys.stderr.write("check linker script for the required board! "+ldscript)
 
-ldscript = board.get('build.ldscript', '')
-if not ldscript:
-    raise RuntimeError('Board has no ldscript!')
-ldscript = join(FRAMEWORK_DIR, 'ldscripts', ldscript)
-env.Replace(LDSCRIPT_PATH=ldscript)
+    if isfile(ldscript):
+        return ldscript
+
+    sys.stderr.write("Warning! Cannot find a linker script for the required board! "+ldscript)
+
+ldscript = get_linker_script()
+if not board.get("build.board_build", ""):
+    env.Replace(LDSCRIPT_PATH=ldscript)
 
 sizes = get_linker_sizes(ldscript)
 board.update("upload.maximum_size", str(sizes[0]))

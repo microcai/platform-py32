@@ -3,8 +3,7 @@
       "core": "py32",
       "cpu": "cortex-m0plus",
       "mcu": "py32f003x6",
-      "extra_flags": "-DPY32F003x6",
-      "ldscript": "py32f003x6.ld"
+      "extra_flags": "-DPY32F003x6"
     },
     "debug": {
       "jlink_device": "PY32F003X6",
